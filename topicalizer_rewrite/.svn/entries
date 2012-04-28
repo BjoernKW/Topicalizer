@@ -1,0 +1,171 @@
+8
+
+dir
+1488
+https://merrys.linguistics.rub.de/svn/repos2/topicalizer
+https://merrys.linguistics.rub.de/svn/repos2
+
+
+
+2007-11-29T20:16:30.549006Z
+1488
+willy
+has-props
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+7df9eab4-4929-0410-8e07-ec5e7decff02
+
+.deployment
+file
+
+
+
+
+2007-07-28T12:50:23.000000Z
+af78c9505a00076c77cfd1fc6b924337
+2007-07-28T12:58:00.465426Z
+892
+willy
+
+.project
+file
+
+
+
+
+2007-07-13T15:21:36.000000Z
+9640c6dc5efa1e4b7e9f2b81b5c6cfb1
+2007-07-13T11:06:49.901086Z
+852
+willy
+
+.pydevproject
+file
+
+
+
+
+2007-07-10T21:14:52.000000Z
+a1d205d08bedf49d86abd42c6e8fb7b0
+2007-07-10T21:57:51.594419Z
+811
+willy
+
+.settings
+dir
+
+README.txt
+file
+
+
+
+
+2007-07-10T21:47:11.000000Z
+24439b53efce44f6da23a0ad859847e1
+2007-07-10T21:57:51.594419Z
+811
+willy
+
+conceptnet
+dir
+
+core
+dir
+
+dev.cfg
+file
+
+
+
+
+2007-07-16T15:22:53.000000Z
+346d4e944344c92c6411f5ea3f3f32a3
+2007-07-16T15:28:05.379857Z
+856
+willy
+
+montylingua
+dir
+
+prod.cfg
+file
+
+
+
+
+2007-07-16T19:26:54.000000Z
+b17d426630e77da6e038f63a760755fd
+2007-07-16T19:27:11.280385Z
+857
+willy
+
+rsync.sh
+file
+
+
+
+
+2007-07-28T12:44:39.000000Z
+acacc699d7ee0cc63e07674ad196ff18
+2007-11-29T20:16:30.549006Z
+1488
+willy
+has-props
+
+scripts
+dir
+
+setup.save.py
+file
+
+
+
+
+2007-07-21T23:19:20.000000Z
+b7837162171fa42fb71da3b5e101e25e
+2007-07-21T23:20:00.532251Z
+887
+willy
+
+start-topicalizer.py
+file
+
+
+
+
+2007-07-10T21:47:11.000000Z
+d314f39475a7cb9d0f3c7ae02280b56a
+2007-07-10T21:57:51.594419Z
+811
+willy
+has-props
+
+test.cfg
+file
+
+
+
+
+2007-07-10T21:47:11.000000Z
+2710504a73106b25cf677951a9eb37ff
+2007-07-10T21:57:51.594419Z
+811
+willy
+
+topicalizer
+dir
+
+topicalizer.egg-info
+dir
+

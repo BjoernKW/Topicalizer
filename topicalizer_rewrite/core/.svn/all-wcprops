@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/repos2/!svn/ver/1488/topicalizer/core
+END
+helper.py
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/repos2/!svn/ver/1488/topicalizer/core/helper.py
+END
+retriever.py
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/repos2/!svn/ver/1488/topicalizer/core/retriever.py
+END
+producer.py
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/repos2/!svn/ver/1488/topicalizer/core/producer.py
+END

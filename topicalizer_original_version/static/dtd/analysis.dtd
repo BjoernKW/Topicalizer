@@ -1,0 +1,103 @@
+<!-- entity definitions -->
+<!ENTITY % def.ngram.content 'token,frequency'>
+
+<!-- elements -->
+<!ELEMENT analysis (result|error)>
+<!ELEMENT result (charset,language,lexical,phrasal,textual)>
+<!ELEMENT charset (#PCDATA)>
+<!ELEMENT language (#PCDATA)>
+<!ELEMENT lexical (
+	  tokenCount,
+	  typeCount,
+	  averageWordsPerSentence,
+	  averageWordsPerParagraph,
+	  lexicalDensity,
+	  averageCharactersPerWord,
+	  averageSyllablesPerWord,
+	  longestWord,
+	  shortestWord,
+	  tenMostFrequentWords,
+	  mostFrequentWordsAll
+	  )>
+<!ELEMENT tokenCount (#PCDATA)>
+<!ELEMENT typeCount (#PCDATA)>
+<!ELEMENT averageWordsPerSentence (#PCDATA)>
+<!ELEMENT averageWordsPerParagraph (#PCDATA)>
+<!ELEMENT lexicalDensity (#PCDATA)>
+<!ELEMENT averageCharactersPerWord (#PCDATA)>
+<!ELEMENT averageSyllablesPerWord (#PCDATA)>
+<!ELEMENT longestWord (#PCDATA)>
+<!ATTLIST longestWord
+	  length CDATA #REQUIRED
+>
+<!ELEMENT shortestWord (#PCDATA)>
+<!ATTLIST shortestWord
+	  length CDATA #REQUIRED
+>
+<!ELEMENT mostFrequentWords (word)+>
+<!ELEMENT word (%def.ngram.content)>
+<!ELEMENT phrasal (
+	  tenMostFrequentBigrams,
+	  tenMostFrequentTrigrams,
+	  tenMostFrequentBigramsWithStopWords,
+	  tenMostFrequentTrigramsWithStopWords,
+	  mostFrequentBigramsAll,
+	  mostFrequentTrigramsAll,
+	  mostFrequentBigramsWithStopWordsAll,
+	  mostFrequentTrigramsWithStopWordsAll,
+	  mostFrequentTetragramsWithStopWordsAll,
+	  mostFrequentPentagramsWithStopWordsAll
+	  )>
+<!ELEMENT tenMostFrequentBigrams (bigram)+>
+<!ELEMENT tenMostFrequentTrigrams (trigram)+>
+<!ELEMENT tenMostFrequentBigramsWithStopWords (bigram)+>
+<!ELEMENT tenMostFrequentTrigramWithStopWords (trigram)+>
+<!ELEMENT mostFrequentBigramsAll (bigram)+>
+<!ELEMENT mostFrequentTrigramsAll (trigram)+>
+<!ELEMENT mostFrequentTetragramsAll (tetragram)+>
+<!ELEMENT mostFrequentPentagramsAll (pentagram)+>
+<!ELEMENT mostFrequentBigramsWithStopWordsAll (bigram)+>
+<!ELEMENT mostFrequentTrigramWithStopWordsAll (trigram)+>
+<!ELEMENT mostFrequentTetragramsWithStopWordsAll (tetragram)+>
+<!ELEMENT mostFrequentPentagramWithStopWordsAll (pentagram)+>
+<!ELEMENT bigram (%def.ngram.content)>
+<!ELEMENT trigram (%def.ngram.content)>
+<!ELEMENT tetragram (%def.ngram.content)>
+<!ELEMENT pentagram (%def.ngram.content)>
+<!ELEMENT token (#PCDATA)>
+<!ELEMENT frequency (#CDATA)>
+<!ELEMENT textual (
+	  paragraphCount,
+	  sentenceCount,
+	  averageSentencesPerParagraph,
+	  longestSentence,
+	  shortestSentence,
+	  gunningFog,
+	  automatedReadability,
+	  colemanLiau,
+	  averageReadability,
+	  keywords,
+	  abstract
+	  )>
+<!ELEMENT paragraphCount (#CDATA)>
+<!ELEMENT sentenceCount (#CDATA)>
+<!ELEMENT averageSentencesPerParagraph (#PCDATA)>
+<!ELEMENT longestSentence (#PCDATA)>
+<!ATTLIST longestSentence
+	  length CDATA #REQUIRED
+>
+<!ELEMENT shortestSentence (#PCDATA)>
+<!ATTLIST shortestSentence
+	  length CDATA #REQUIRED
+>
+<!ELEMENT gunningFog (#PCDATA)>
+<!ELEMENT automatedReadability (#PCDATA)>
+<!ELEMENT colemanLiau (#PCDATA)>
+<!ELEMENT averageReadability (#PCDATA)>
+<!ELEMENT keywords (keyword)+>
+<!ELEMENT keyword (token)>
+<!ELEMENT abstract (sentence)+>
+<!ELEMENT sentence (token)>
+<!ELEMENT error (message,url)>
+<!ELEMENT message (#PCDATA)>
+<!ELEMENT url (#PCDATA)>

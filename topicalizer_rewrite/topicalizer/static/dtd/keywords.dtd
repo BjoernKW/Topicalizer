@@ -1,0 +1,13 @@
+<!-- elements -->
+<!ELEMENT analysis (result|error)>
+<!ELEMENT result (tenMostFrequentWords,mostFrequentWordsAll,keywords)>
+<!ELEMENT tenMostFrequentWords (word)+>
+<!ELEMENT mostFrequentWordsAll (word)+>
+<!ELEMENT word (token,frequency)>
+<!ELEMENT keywords (keyword)+>
+<!ELEMENT keyword (token)>
+<!ELEMENT token (#PCDATA)>
+<!ELEMENT frequency (#PCDATA)>
+<!ELEMENT error (message,url)>
+<!ELEMENT message (#PCDATA)>
+<!ELEMENT url (#PCDATA)>

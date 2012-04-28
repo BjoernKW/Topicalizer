@@ -1,0 +1,6 @@
+<!-- elements -->
+<!ELEMENT analysis (result|error)>
+<!ELEMENT result (linkedTerms)>
+<!ELEMENT linkedTerms (term)+>
+<!ELEMENT term (text)>
+<!ELEMENT text (#PCDATA)>

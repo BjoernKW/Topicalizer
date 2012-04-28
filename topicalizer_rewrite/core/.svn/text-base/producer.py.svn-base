@@ -1,0 +1,437 @@
+from __future__ import division
+
+# semantic web producer
+class SemanticWeb:
+    # constructor
+    def __init__(self):
+        pass
+
+    # create semantic web for a term
+    def createSemanticWeb(self, term = '', language = 'english', languages = [], googleLicenseKey = ''):
+        import helper, analyser, re, google
+        from operator import itemgetter
+    
+        # initialise keyword dictionary
+        keywords = {}
+    
+        # initialise query string
+        query = term + ' site:en.wikipedia.org'
+    
+        # initialise error string
+        error = 0
+        errorMessage = ''
+    
+        # Google licence key
+        google.LICENSE_KEY = googleLicenseKey
+    
+        # query Google
+        try:
+            data = google.doGoogleSearch(query)
+            wikiPage = data.results[0]
+        except:
+            error = 1
+            errorMessage = 'Sorry, an error occured during this request, please try again'
+
+        # get corpus
+        corpusHelper = helper.CorpusHelper()
+        corpusInfo = corpusHelper.getCorpus(wikiPage.URL)
+        error = corpusInfo['error']
+        errorMessage = corpusInfo['errorMessage']
+        corpus = corpusInfo['corpus']
+        charset = corpusInfo['charset']
+
+        # if retrieval was successful
+        if error != 1:
+            # tokenizer
+            tokenizer = analyser.Tokenizer()
+
+            # initialise corpus helper
+            corpusHelper = helper.CorpusHelper()
+            
+            # get corpus information
+            corpusInfo = corpusHelper.getLinkedTerms(tokenizer, corpus, language, languages)
+            tokenizedCorpus = corpusInfo['tokenizedCorpus']
+            linkedTerms = corpusInfo['linkedTerms']
+    
+            # calculate some average values
+            tokenCount = len(tokenizedCorpus)
+            
+            # word structure
+            wordStructure = analyser.WordStructure()
+    
+            # text structure
+            textStructure = analyser.TextStructure()
+    
+            # get N-grams
+            ngrams = textStructure.getNGrams(tokenizedCorpus, tokenCount)
+            mostFrequentUnigrams = ngrams['mostFrequentUnigrams']
+            mostFrequentBigrams = ngrams['mostFrequentBigrams']
+            mostFrequentTrigrams = ngrams['mostFrequentTrigrams']
+    
+            # add unigrams to keyword dictionary
+            for ngram in mostFrequentUnigrams:
+                keywords[ngram] = mostFrequentUnigrams[ngram]
+    
+            # add bigrams to keyword dictionary
+            for ngram in mostFrequentBigrams:
+                keywords[ngram] = mostFrequentBigrams[ngram]
+    
+            # add trigrams to keyword dictionary
+            for ngram in mostFrequentTrigrams:
+                keywords[ngram] = mostFrequentTrigrams[ngram]
+    
+            # build return dictionary
+            returnDict = dict(error = error,
+                              errorMessage = errorMessage,
+                              charset = charset,
+                              tokenCount = tokenCount,
+                              keywords = sorted(keywords.iteritems(), key = itemgetter(1), reverse = True),
+                              debug = 0,
+                              wikiPage = wikiPage,
+                              term = term,
+                              linkedTerms = linkedTerms)
+    
+        # if URL retrieval error
+        else:
+            # build return dictionary
+            returnDict = dict(error = error,
+                              errorMessage = errorMessage,
+                              fallback = fallback,
+                              debug = 1,
+                              term = term)
+    
+        # return values
+        return returnDict
+
+# analysis producer
+class Analysis:
+    # constructor
+    def __init__(self):
+        # charset
+        self.charset = 'us-ascii'
+
+    # create analysis
+    def createAnalysis(self, url = '', plainText = '', language = 'automatic', languages = []):
+        import retriever, analyser, helper, classifier
+        from operator import itemgetter
+    
+        # initialise error string
+        error = 0
+        errorMessage = ''
+    
+        # get corpus
+        corpusHelper = helper.CorpusHelper()
+        corpusInfo = corpusHelper.getCorpus(url, plainText)
+        error = corpusInfo['error']
+        errorMessage = corpusInfo['errorMessage']
+        corpus = corpusInfo['corpus']
+        charset = corpusInfo['charset']
+        url = corpusInfo['url']
+
+        # if retrieval was successful
+        if error != 1:
+            # tokenizer
+            tokenizer = analyser.Tokenizer()
+            
+            # initialise corpus helper
+            corpusHelper = helper.CorpusHelper()
+            
+            # get tokenized corpus
+            corpusInfo = corpusHelper.getTokenizedCorpus(tokenizer, corpus, language, languages)
+            tokenizedCorpus = corpusInfo['tokenizedCorpus']
+            corpus = corpusInfo['corpus']
+            language = corpusInfo['language']
+            
+            # word structure
+            wordStructure = analyser.WordStructure()
+            
+            # get paragraphs
+            paragraphs = list(tokenizer.processParagraphs(corpus))
+    
+            # get word structure analysis
+            wordStructureAnalysis = wordStructure.getAnalysis(tokenizedCorpus)
+            types = list(wordStructureAnalysis['types'])
+            sentences = list(wordStructureAnalysis['sentences'])
+            sentenceStrings = list(wordStructureAnalysis['sentenceStrings'])
+            charactersPerToken = list(wordStructureAnalysis['charactersPerToken'])
+            maxSentenceLength = wordStructureAnalysis['maxSentenceLength']
+            minSentenceLength = wordStructureAnalysis['minSentenceLength']
+            maxTokenLength = wordStructureAnalysis['maxTokenLength']
+            minTokenLength = wordStructureAnalysis['minTokenLength']
+            maxSentence = wordStructureAnalysis['maxSentence']
+            minSentence = wordStructureAnalysis['minSentence']
+            maxToken = wordStructureAnalysis['maxToken']
+            minToken = wordStructureAnalysis['minToken']
+            sumOfCharacters = wordStructureAnalysis['sumOfCharacters']
+
+            # calculate some average values
+            paragraphCount = len(paragraphs)
+            tokenCount = len(tokenizedCorpus)
+            typeCount = len(types)
+            sentenceCount = len(sentences)
+    
+            # if token count is not 0
+            if tokenCount != 0:
+                lexicalDensity = round(typeCount / tokenCount, 2)
+                averageCharactersPerWord = round(sumOfCharacters / tokenCount, 2)
+            else:
+                lexicalDensity = 0
+                averageCharactersPerWord = 0
+    
+            # if sentence count is not 0
+            if sentenceCount != 0:
+                averageTokensPerSentence = round(tokenCount / sentenceCount, 2)
+                averageTokensPerParagraph = round(tokenCount / paragraphCount, 2)
+            else:
+                averageTokensPerSentence = 0
+                averageTokensPerParagraph = 0
+    
+            # if paragraph count is not 0
+            if paragraphCount != 0:
+                averageSentencesPerParagraph = round(sentenceCount / paragraphCount, 2)
+            else:
+                averageSentencesPerParagraph = 0
+    
+            # syllables
+            syllableInformation = wordStructure.getSyllableInformation(tokenizedCorpus, types)
+            totalSyllables = syllableInformation['sum']
+            syllablesPerToken = syllableInformation['syllablesPerToken']
+            syllablesPerType = syllableInformation['syllablesPerType']
+    
+            # if token count is not 0
+            if tokenCount != 0:
+                averageSyllablesPerWord = round(totalSyllables / tokenCount, 2)
+            else:
+                averageSyllablesPerWord = 0
+    
+            # analyse text structure
+            textStructure = analyser.TextStructure()
+    
+            # get N-grams
+            ngrams = textStructure.getNGrams(tokenizedCorpus, tokenCount)
+            mostFrequentUnigrams = ngrams['mostFrequentUnigrams']
+            mostFrequentUnigramsAbstract = ngrams['mostFrequentUnigramsAbstract']
+            mostFrequentBigrams = ngrams['mostFrequentBigrams']
+            mostFrequentTrigrams = ngrams['mostFrequentTrigrams']
+            mostFrequentBigramsWithStopWords = ngrams['mostFrequentBigramsWithStopWords']
+            mostFrequentTrigramsWithStopWords = ngrams['mostFrequentTrigramsWithStopWords']
+            mostFrequentUnigramsAll = ngrams['mostFrequentUnigramsAll']
+            mostFrequentBigramsAll = ngrams['mostFrequentBigramsAll']
+            mostFrequentTrigramsAll = ngrams['mostFrequentTrigramsAll']
+            mostFrequentTetragramsAll = ngrams['mostFrequentTetragramsAll']
+            mostFrequentPentagramsAll = ngrams['mostFrequentPentagramsAll']
+            mostFrequentBigramsWithStopWordsAll = ngrams['mostFrequentBigramsWithStopWordsAll']
+            mostFrequentTrigramsWithStopWordsAll = ngrams['mostFrequentTrigramsWithStopWordsAll']
+            mostFrequentTetragramsWithStopWordsAll = ngrams['mostFrequentTetragramsWithStopWordsAll']
+            mostFrequentPentagramsWithStopWordsAll = ngrams['mostFrequentPentagramsWithStopWordsAll']
+    
+            # get keywords
+            keywords = list(textStructure.getKeywords(mostFrequentUnigrams, mostFrequentBigrams, mostFrequentTrigrams, mostFrequentBigramsWithStopWords, mostFrequentTrigramsWithStopWords))
+            
+            # build string for Google query
+            googleHelper = helper.GoogleHelper()
+            query = googleHelper.getGoogleQuery(mostFrequentUnigrams)
+
+            # get abstract
+            abstract = textStructure.getAbstract(mostFrequentUnigramsAbstract, sentenceStrings)
+    
+            # if token count is 0
+            if tokenCount == 0:
+                readabilityGF = 0
+                readabilityCL = 0
+            else:
+                # readability according to Gunning-Fog Index
+                readabilityGF = textStructure.analyseReadabilityGF(averageTokensPerSentence, syllablesPerType, tokenCount)
+        
+                # readability according to Coleman-Liau Index
+                readabilityCL = textStructure.analyseReadabilityCL(averageCharactersPerWord, sentenceCount, tokenCount)
+        
+                # readability according to Automated Readability Index
+                readabilityAR = textStructure.analyseReadabilityAR(averageCharactersPerWord, averageTokensPerSentence)
+        
+                # average readability
+                readabilityAverage = round((readabilityGF + readabilityAR + readabilityCL) / 3, 2)
+            
+            # build return dictionary
+            returnDict = dict(languages = languages,
+                              languageTitle = language.title(),
+                              error = error,
+                              errorMessage = errorMessage,
+                              charset = charset,
+                              paragraphCount = paragraphCount,
+                              sentenceCount = sentenceCount,
+                              tokenCount = tokenCount,
+                              typeCount = typeCount,
+                              lexicalDensity = lexicalDensity,
+                              averageCharactersPerWord = averageCharactersPerWord,
+                              averageSyllablesPerWord = averageSyllablesPerWord,
+                              mostFrequentUnigrams = sorted(mostFrequentUnigrams.iteritems(), key = itemgetter(1), reverse = True),
+                              mostFrequentBigrams = sorted(mostFrequentBigrams.iteritems(), key = itemgetter(1), reverse = True),
+                              mostFrequentTrigrams = sorted(mostFrequentTrigrams.iteritems(), key = itemgetter(1), reverse = True),
+                              mostFrequentBigramsWithStopWords = sorted(mostFrequentBigramsWithStopWords.iteritems(), key = itemgetter(1), reverse = True),
+                              mostFrequentTrigramsWithStopWords = sorted(mostFrequentTrigramsWithStopWords.iteritems(), key = itemgetter(1), reverse = True),
+                              mostFrequentUnigramsAll = sorted(mostFrequentUnigramsAll.iteritems(), key = itemgetter(1), reverse = True),
+                              mostFrequentBigramsAll = sorted(mostFrequentBigramsAll.iteritems(), key = itemgetter(1), reverse = True),
+                              mostFrequentTrigramsAll = sorted(mostFrequentTrigramsAll.iteritems(), key = itemgetter(1), reverse = True),
+                              mostFrequentTetragramsAll = sorted(mostFrequentTetragramsAll.iteritems(), key = itemgetter(1), reverse = True),
+                              mostFrequentPentagramsAll = sorted(mostFrequentPentagramsAll.iteritems(), key = itemgetter(1), reverse = True),
+                              mostFrequentBigramsWithStopWordsAll = sorted(mostFrequentBigramsWithStopWordsAll.iteritems(), key = itemgetter(1), reverse = True),
+                              mostFrequentTrigramsWithStopWordsAll = sorted(mostFrequentTrigramsWithStopWordsAll.iteritems(), key = itemgetter(1), reverse = True),
+                              mostFrequentTetragramsWithStopWordsAll = sorted(mostFrequentTetragramsWithStopWordsAll.iteritems(), key = itemgetter(1), reverse = True),
+                              mostFrequentPentagramsWithStopWordsAll = sorted(mostFrequentPentagramsWithStopWordsAll.iteritems(), key = itemgetter(1), reverse = True),
+                              keywords = keywords,
+                              abstract = sorted(abstract.iteritems(), key = itemgetter(1), reverse = True)[0:5],
+                              readabilityGF = readabilityGF,
+                              readabilityAR = readabilityAR,
+                              readabilityCL = readabilityCL,
+                              readabilityAverage = readabilityAverage,
+                              averageTokensPerSentence = averageTokensPerSentence,
+                              averageTokensPerParagraph = averageTokensPerParagraph,
+                              averageSentencesPerParagraph = averageSentencesPerParagraph,
+                              maxSentenceLength = maxSentenceLength,
+                              minSentenceLength = minSentenceLength,
+                              maxTokenLength = maxTokenLength,
+                              minTokenLength = minTokenLength,
+                              maxSentence = maxSentence,
+                              minSentence = minSentence,
+                              maxToken = maxToken,
+                              minToken = minToken,
+                              query = query,
+                              debug = 0,
+                              url = url)
+            
+        # if URL retrieval error
+        else:   
+            # build return dictionary
+            returnDict = dict(languages = languages,
+                              error = error,
+                              errorMessage = errorMessage,
+                              debug = 1,
+                              url = url)
+    
+        # return values
+        return returnDict
+
+    # create mood analysis
+    def createMoodAnalysis(self, url = '', plainText = '', language = 'automatic', languages = [], conceptNetNLTools =  None):
+        import analyser, helper
+    
+        # initialise error string
+        error = 0
+        errorMessage = ''
+        
+        # if no ConceptNet instance has been provided
+        if conceptNetNLTools == None:
+            error = 1
+            errorMessage = 'ConceptNet could not be initialised.'
+    
+        # if ConceptNet is available
+        if error != 1:
+            # get corpus
+            corpusHelper = helper.CorpusHelper()
+            corpusInfo = corpusHelper.getCorpus(url, plainText)
+            error = corpusInfo['error']
+            errorMessage = corpusInfo['errorMessage']
+            corpus = corpusInfo['corpus']
+            charset = corpusInfo['charset']
+            url = corpusInfo['url']
+
+        # if retrieval was successful
+        if error != 1:
+            # tokenizer
+            tokenizer = analyser.Tokenizer()
+            
+            # initialise corpus helper
+            corpusHelper = helper.CorpusHelper()
+            
+            # get tokenized corpus
+            corpusInfo = corpusHelper.getTokenizedCorpus(tokenizer, corpus, language, languages)
+            corpus = corpusInfo['corpus']
+            language = corpusInfo['language']
+            
+            # guess moods
+            moods = conceptNetNLTools.guess_mood(corpus.encode(self.charset, 'replace'))
+            
+            # build return dictionary
+            returnDict = dict(languages = languages,
+                              languageTitle = language.title(),
+                              error = error,
+                              errorMessage = errorMessage,
+                              charset = charset,
+                              debug = 0,
+                              url = url,
+                              moods = moods)
+            
+        # if URL retrieval error
+        else:   
+            # build return dictionary
+            returnDict = dict(languages = languages,
+                              error = error,
+                              errorMessage = errorMessage,
+                              debug = 1,
+                              url = url)
+    
+        # return values
+        return returnDict
+
+    # create conceptual analysis
+    def createConceptGuesses(self, url = '', plainText = '', language = 'automatic', languages = [], conceptNetNLTools =  None):
+        import analyser, helper
+    
+        # initialise error string
+        error = 0
+        errorMessage = ''
+        
+        # if no ConceptNet instance has been provided
+        if conceptNetNLTools == None:
+            error = 1
+            errorMessage = 'ConceptNet could not be initialised.'
+            
+        # if ConceptNet is available
+        if error != 1:
+            # get corpus
+            corpusHelper = helper.CorpusHelper()
+            corpusInfo = corpusHelper.getCorpus(url, plainText)
+            error = corpusInfo['error']
+            errorMessage = corpusInfo['errorMessage']
+            corpus = corpusInfo['corpus']
+            charset = corpusInfo['charset']
+            url = corpusInfo['url']
+
+        # if retrieval was successful
+        if error != 1:
+            # tokenizer
+            tokenizer = analyser.Tokenizer()
+            
+            # initialise corpus helper
+            corpusHelper = helper.CorpusHelper()
+            
+            # get tokenized corpus
+            corpusInfo = corpusHelper.getTokenizedCorpus(tokenizer, corpus, language, languages)
+            corpus = corpusInfo['corpus']
+            language = corpusInfo['language']
+            
+            # guess concepts
+            concepts = conceptNetNLTools.guess_concept(corpus.encode(self.charset, 'replace'))
+            
+            # build return dictionary
+            returnDict = dict(languages = languages,
+                              languageTitle = language.title(),
+                              error = error,
+                              errorMessage = errorMessage,
+                              charset = charset,
+                              debug = 0,
+                              url = url,
+                              concepts = concepts)
+            
+        # if URL retrieval error
+        else:   
+            # build return dictionary
+            returnDict = dict(languages = languages,
+                              error = error,
+                              errorMessage = errorMessage,
+                              debug = 1,
+                              url = url)
+    
+        # return values
+        return returnDict

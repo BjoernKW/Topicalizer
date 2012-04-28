@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html dir="ltr" lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:py="http://purl.org/kid/ns#" py:extends="'master.kid'">
+<head profile="http://dublincore.org/documents/dcq.html">
+<title>Topicalizer - The tool for topic extraction, text analysis and abstract generation</title>
+<meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
+<meta name="DC.title" content="Topicalizer - The tool for topic extraction, text analysis and automatic abstract generation" />
+<meta name="DC.subject" content="Text analysis" />
+<meta name="DC.description" content="Topicalizer is a tool for topic extraction, text analysis, abstract generation and search engine optimization" />
+<meta name="DC.audience" content="Webmasters, bloggers, linguists, authors" />
+<meta name="DC.creator" content="Bj&ouml;rn Wilmsmann" />
+<meta name="DC.publisher" content="Topicalizer" />
+<meta name="DC.contributor" content="Bj&ouml;rn Wilmsmann" />
+<meta name="DC.date" content="2006-01-27" />
+<meta name="DC.type" content="Text" />
+<meta name="DC.format" content="text/xhtml" />
+<meta name="DC.identifier" content="http://www.topicalizer.com/" />
+<meta name="DC.source" content="none" />
+<meta name="DC.language" content="en" />
+<meta name="DC.relation" content="Index" />
+<meta name="DC.coverage" content="Text analysis, semantic web, search engine optimization, topic recognition, tagging, tag, topic, text summary" />
+<meta name="DC.rights" content="All rights reserved" />
+<meta name="audience" xml:lang="en" content="Webmasters, bloggers" />
+<meta name="audience" content="Webmasters, bloggers" lang="en" />
+<meta name="keywords" xml:lang="en" content="Text analysis, semantic web, search engine optimization, topic recognition, tagging, tag, topic, text summary" />
+<meta name="robots" content="index,follow" />
+<meta name="revisit-after" content="1 month" />
+<link rel="shortcut icon" href="/static/images/favicon.ico" />
+<link rel="icon" href="/static/images/favicon.ico" />
+<link rel="stylesheet" type="text/css" href="/static/css/standard.css" />
+<script src="/static/javascript/fat.js" type="text/javascript"></script>
+</head>
+<body>
+<h2>Disclaimer</h2>
+<table align="center">
+  <tr>
+    <td width="600">
+      I. The site owner and operator Bj&ouml;rn Wilmsmann will be referred to under the term 'owner' in this document. The site topicalizer.com will be referred to under the term 'site' in this document.<br /><br />
+      II. THE SITE AND ITS MATERIALS ARE PROVIDED "AS IS" AND WITHOUT WARRANTIES OF ANY KIND EITHER EXPRESS OR IMPLIED. TO THE FULLEST EXTENT PERMISSIBLE BY APPLICABLE LAW, THE OWNERS DISCLAIM ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT OF INTELLECTUAL PROPERTY RIGHTS.<br /><br />
+      III. The owner does not warrant the accuracy and completeness of the materials or services provided at this site. The owner also does not warrant that any functions of the site will be uninterrupted or error-free, that defects will be corrected, or that the site or the server that makes it available is free from viruses or other harmful components. Some jurisdictions may not allow the exclusion of an implied warranty so some of the above exclusions may not apply to you in all circumstances.<br /><br />
+      IV. Some web pages on this site may provide links to other Internet sites for the convenience of users. The owner of this site is not responsible for the availability or content of these external sites, nor does the owner of this site endorse, warrant, or guarantee the products, services, or information described or offered at these other Internet sites.<br /><br />
+    </td>
+  </tr>
+</table>
+</body>
+</html>

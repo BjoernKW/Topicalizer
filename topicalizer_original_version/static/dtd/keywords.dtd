@@ -1,0 +1,16 @@
+<!-- entity definitions -->
+<!ENTITY % def.ngram.content 'token,frequency'>
+
+<!-- elements -->
+<!ELEMENT analysis (result|error)>
+<!ELEMENT result (tenMostFrequentWords,mostFrequentWordsAll,keywords)>
+<!ELEMENT tenMostFrequentWords (word)+>
+<!ELEMENT mostFrequentWordsAll (word)+>
+<!ELEMENT word (%def.ngram.content)>
+<!ELEMENT keywords (keyword)+>
+<!ELEMENT keyword (token)>
+<!ELEMENT token (#PCDATA)>
+<!ELEMENT frequency (#CDATA)>
+<!ELEMENT error (message,url)>
+<!ELEMENT message (#PCDATA)>
+<!ELEMENT url (#PCDATA)>

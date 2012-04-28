@@ -1,0 +1,100 @@
+8
+
+dir
+1488
+https://merrys.linguistics.rub.de/svn/repos2/topicalizer/topicalizer
+https://merrys.linguistics.rub.de/svn/repos2
+
+
+
+2007-11-29T20:16:30.549006Z
+1488
+willy
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+7df9eab4-4929-0410-8e07-ec5e7decff02
+
+__init__.py
+file
+
+
+
+
+2007-07-10T21:47:11.000000Z
+d41d8cd98f00b204e9800998ecf8427e
+2007-07-10T21:57:51.594419Z
+811
+willy
+
+config
+dir
+
+controllers.py
+file
+
+
+
+
+2007-07-16T14:40:03.000000Z
+5fce19274223d94cfad992c3ab0bc77c
+2007-07-16T15:11:17.901436Z
+854
+willy
+
+json.py
+file
+
+
+
+
+2007-07-10T21:47:11.000000Z
+c742e39d9b1d4b948096f0dcb48959d1
+2007-07-10T21:57:51.594419Z
+811
+willy
+
+model.py
+file
+
+
+
+
+2007-07-10T21:47:11.000000Z
+bbcceca77d8a89ddf77774daf56870a8
+2007-11-29T20:16:30.549006Z
+1488
+willy
+
+release.py
+file
+
+
+
+
+2007-07-10T21:47:11.000000Z
+921b27d647778ca8b4dbb6d8a87f59b5
+2007-07-10T21:57:51.594419Z
+811
+willy
+
+static
+dir
+
+templates
+dir
+
+tests
+dir
+

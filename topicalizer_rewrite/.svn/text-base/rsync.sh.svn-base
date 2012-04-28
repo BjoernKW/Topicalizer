@@ -1,0 +1,1 @@
+rsync -e ssh -r ./ merrys.linguistics.rub.de:/opt/topicalizer/
