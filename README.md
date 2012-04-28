@@ -1,9 +1,14 @@
 Topicalizer
 ===========
 
+About
+-------
+
+http://www.topicalizer.com
+
 License
 -------
 
 Topicalizer is released under the MIT license:
 
-www.opensource.org/licenses/MIT
+http://www.opensource.org/licenses/MIT
